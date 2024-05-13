@@ -1,0 +1,389 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract MyDurianTracing {
+    //enum
+    enum Roles {
+        Farmer,
+        Distributor,
+        Retailer,
+        Customer
+        //Length-to know the total number in Roles
+    }
+
+    enum RatingScale {
+        Undefined,
+        Inedible,
+        Bad,
+        Average,
+        Good,
+        Excellent
+    }
+
+    //struct
+    struct User {
+        address userAddress;
+        string userName;
+        Roles userRole;
+    }
+
+    struct Farm {
+        uint farmID;
+        address farmOwner;
+        string farmName;
+    }
+
+    struct DistributionCenter {
+        uint distributionCenterID;
+        address distributionCenterOwner;
+        string distributionCenterName;
+    }
+
+    struct RetailShop {
+        uint retailShopID;
+        address retailShopOwner;
+        string retailShopName;
+    }
+
+    struct Customer {
+        address customerAddress;
+        string customerName;
+    }
+
+    struct DurianFarm {
+        uint farmID;
+        int harvestDateTime;
+        int datePassToDistributionCenter;
+        uint distributionCenterID;
+    }
+
+    struct DurianDistributionCenter {
+        int dateReceivedFromFarm;
+        int datePassToRetailer;
+        uint retailShopID;
+    }
+
+    struct DurianRetailShop {
+        int dateReceivedFromDistributionCenter;
+        int datePassToCustomer;
+        address customerAddress;
+    }
+
+    struct DurianCustomer {
+        int dateReceivedFromRetailer;
+        Rating rating;
+    }
+
+    struct Durian {
+        uint durianID;
+        string durianType;
+        DurianFarm durianFarm;//from which farm
+        DurianDistributionCenter durianDistributionCenter; //to which distribution center
+        DurianRetailShop durianRetailShop; //to which retail shop
+        DurianCustomer durianCustomer; // belong to which customer
+    }
+
+    struct Rating {
+        RatingScale taste;
+        RatingScale fragrance;
+        RatingScale texture;
+        RatingScale creaminess;
+        RatingScale ripeness;
+        string gradeRating;
+        string comment;
+    }
+
+    //mapping
+    uint public usersCount = 0;
+    uint public duriansCount = 0 ; 
+
+    uint public distributionCentersCount = 0;
+    uint public retailShopsCount = 0;
+    uint public customersCount = 0;
+
+    Farm[] public farms;
+    uint256 public farmsCount;
+
+    uint[] durianIDs;
+    uint[] farmIDs;
+    uint[] distributionCenterIDs;
+    uint[] retailShopIDs;
+    address[] retailShopAddresses;
+    address[] customerAddresses;
+
+    mapping(uint256 => address) public farmOwners;
+
+    mapping(address => User) public users;
+    mapping(address => uint) public farmers; // mapping(farmerAddress => farmID)
+    mapping(address => uint) public distributors; // mapping(distributorAddress => distributionCenterID)
+    mapping(address => uint) public retailers; // mapping(retailerAddress => retailShopID)
+    mapping(uint => Durian) public durians; // mapping(durianId => durian)
+    mapping(uint => DistributionCenter) public distributionCenters; // mapping(distributionCenterID => distributionCenter)
+    mapping(uint => RetailShop) public retailShops; // mapping(retailerAddress => retailer)
+    mapping(address => Customer) public customers; // mapping(customerAddress => customer)
+   
+    //Variable
+    address public owner;
+
+    //Constructor
+    constructor() {
+        owner = msg.sender;
+    }
+
+    //modifier
+    modifier onlyOwner() {
+        require(msg.sender == owner, 
+        "Only the owner can perform this operation.");
+        _;
+    }
+
+    modifier onlyDistributor() {
+        require(users[msg.sender].userRole == Roles.Distributor,
+        "Only distributors can perform this operation.");
+        _;
+    }
+
+    // OnlyBy modifier for farmers
+    modifier onlyFarmer() {
+        require(users[msg.sender].userRole == Roles.Farmer,
+            "Only farmer can call this function");
+        _;
+    }
+
+
+    modifier onlyRetailer() {
+           require(users[msg.sender].userRole == Roles.Retailer, 
+        "Only retailers can perform this operation.");
+        _;
+    }
+
+    modifier onlyCustomer() {
+        require(
+            users[msg.sender].userRole == Roles.Customer,
+            "Only customer can call this function");
+        _;
+    }
+
+    //function
+
+    // Create user
+    function createUser(string memory _name) external {
+        User memory user = User(msg.sender, _name, Roles.Customer); // Default role is customer
+        Customer memory customer = Customer(msg.sender, _name);
+        users[msg.sender] = user;
+        usersCount++;
+        customers[msg.sender] = customer;
+        customersCount++;
+        customerAddresses.push(msg.sender);
+    }
+
+    // Assign role for user only by owner
+    function assignRole(address _userAddress, Roles _role) external onlyOwner {
+        users[_userAddress].userRole = _role;
+    }
+
+    function createFarm(
+        address _owner,
+    string memory _name
+    ) external onlyOwner {
+    farmsCount++; // Increment the farmsCount
+    Farm memory farm = Farm({
+        farmID: farmsCount,
+        farmOwner: _owner,
+        farmName: _name
+    });
+    farms.push(farm); // Add the farm to the farms array
+    }
+
+    // Create durian onlyby farm
+    function createDurian(
+        uint _farmID,
+        string memory _type,
+        int _harvestDateTime
+    ) external onlyFarmer {
+        DurianFarm memory durianFarm = DurianFarm({
+            farmID: _farmID,
+            harvestDateTime: _harvestDateTime,
+            datePassToDistributionCenter: 0,
+            distributionCenterID: 0
+        });
+
+        Durian memory durian = Durian({
+            durianID: duriansCount + 1,
+            durianType: _type,
+            durianFarm: durianFarm,
+            durianDistributionCenter: DurianDistributionCenter({
+                dateReceivedFromFarm: 0,
+                datePassToRetailer: 0,
+                retailShopID: 0
+            }),
+            durianRetailShop: DurianRetailShop({
+                dateReceivedFromDistributionCenter: 0,
+                datePassToCustomer: 0,
+                customerAddress: address(0)
+            }),
+            durianCustomer: DurianCustomer({
+                dateReceivedFromRetailer: 0,
+                rating: Rating({
+                    taste: RatingScale.Undefined,
+                    fragrance: RatingScale.Undefined,
+                    texture: RatingScale.Undefined,
+                    creaminess: RatingScale.Undefined,
+                    ripeness: RatingScale.Undefined,
+                    gradeRating: "",
+                    comment: ""
+                })
+            })
+        });
+
+        // Add durian to mapping
+        durians[durian.durianID] = durian;
+        duriansCount++;
+        durianIDs.push(durian.durianID);
+    }
+
+    // Update date pass to distribution center
+    function updateDatePassToDistributionCenter(
+        uint _durianID,
+        int _datePassToDistributionCenter,
+        uint _distributionCenterID
+    ) external onlyFarmer {
+        durians[_durianID]
+            .durianFarm
+            .datePassToDistributionCenter = _datePassToDistributionCenter;
+        durians[_durianID].durianFarm.distributionCenterID = _distributionCenterID;
+    }
+
+    // Update durian information for distributor
+    function updateDurianInfoForDistributor(
+        uint _durianID,
+        int _dateReceivedFromFarm
+    ) external onlyDistributor {
+        durians[_durianID]
+            .durianDistributionCenter
+            .dateReceivedFromFarm = _dateReceivedFromFarm;
+    }
+
+    // Update date pass to retailer
+    function updateDatePassToRetailer(
+        uint _durianID,
+        int _datePassToRetailer,
+        uint _retailShopID
+    ) external onlyDistributor {
+        durians[_durianID]
+            .durianDistributionCenter
+            .datePassToRetailer = _datePassToRetailer;
+        durians[_durianID].durianDistributionCenter.retailShopID = _retailShopID;
+    }
+
+    // Update durian information for retailer
+    function updateDurianInfoForRetailer(
+        uint _durianID,
+        int _dateReceivedFromDistributionCenter
+    ) external onlyRetailer {
+        durians[_durianID]
+            .durianRetailShop
+            .dateReceivedFromDistributionCenter = _dateReceivedFromDistributionCenter;
+    }
+
+    // Update date pass to cutomer
+    function updateDatePassToCustomer(
+        uint _durianID,
+        int _datePassToCustomer,
+        address _cutomerAddress
+    ) external onlyRetailer {
+        durians[_durianID].durianRetailShop.datePassToCustomer = _datePassToCustomer;
+        durians[_durianID].durianRetailShop.customerAddress = _cutomerAddress;
+    }
+
+    // Update durian information for cutomer
+    function updateDurianInfoForCustomer(
+        uint _durianID,
+        int _dateReceivedFromRetailer
+    ) external onlyCustomer {
+        durians[_durianID]
+            .durianCustomer
+            .dateReceivedFromRetailer = _dateReceivedFromRetailer;
+    }
+
+    // Update durian rating
+    function updateDurianRating(
+        uint _durianID,
+        uint _taste,
+        uint _fragrance,
+        uint _texture,
+        uint _creaminess,
+        uint _ripeness,
+        string memory _gradeRating,
+        string memory _comment
+    ) external onlyCustomer {
+        durians[_durianID].durianCustomer.rating.taste = RatingScale(_taste);
+        durians[_durianID].durianCustomer.rating.fragrance = RatingScale(_fragrance);
+        durians[_durianID].durianCustomer.rating.texture = RatingScale(_texture);
+        durians[_durianID].durianCustomer.rating.creaminess = RatingScale(_creaminess);
+        durians[_durianID].durianCustomer.rating.ripeness = RatingScale(_ripeness);
+        durians[_durianID].durianCustomer.rating.gradeRating = _gradeRating;
+        durians[_durianID].durianCustomer.rating.comment = _comment;
+    }
+
+    // Get durian information for customer
+    function getDurianInfoForCustomer(
+        uint _durianID
+    ) external view returns (Durian memory) {
+        return durians[_durianID];
+    }
+
+    // Create distribution center onlyby distributor
+    function createDistributionCenter(
+        address _owner,
+        string memory _name
+    ) external onlyOwner {
+        DistributionCenter memory distributionCenter = DistributionCenter({
+            distributionCenterID: distributionCentersCount + 1,
+            distributionCenterOwner: _owner,
+            distributionCenterName: _name
+        });
+
+        // Add distribution center to mapping
+        distributionCenters[
+            distributionCenter.distributionCenterID
+        ] = distributionCenter;
+        distributionCentersCount++;
+        distributionCenterIDs.push(distributionCenter.distributionCenterID);
+
+        // Add owner to distributor list
+        distributors[_owner] = distributionCenter.distributionCenterID;
+    }
+
+    // Create retail shop onlyby distributor
+    function createRetailShop(
+        address _owner,
+        string memory _name
+    ) external onlyOwner {
+        RetailShop memory retailShop = RetailShop({
+            retailShopID: retailShopsCount + 1,
+            retailShopOwner: _owner,
+            retailShopName: _name
+        });
+
+        // Add retail shop to mapping
+        retailShops[
+            retailShop.retailShopID
+        ] = retailShop;
+        retailShopsCount++;
+       retailShopIDs.push(retailShop.retailShopID);
+
+        // Add owner to distributor list
+        distributors[_owner] = retailShop.retailShopID;
+    }
+
+    // Get customers
+    function getCustomers() external view returns (Customer[] memory) {
+        Customer[] memory customer = new Customer[](customerAddresses.length);
+        for (uint i = 0; i < customerAddresses.length; i++) {
+        	customer[i] = customers[customerAddresses[i]];
+        }
+        return (customer);
+    }
+}
+

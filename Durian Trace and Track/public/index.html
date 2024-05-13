@@ -1,0 +1,2947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@1.2.11/dist/web3.min.js"></script>
+  <script src="js/allFunction.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content=" width=device-width, initial-scale=1.0" />
+  <title>Durian Track and Trace</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+  <header>
+    <div class="shell">
+      <div class="navi">
+        <div class="logo">
+          <img src="images/durian.png" alt="Durian Logo" height="100" />
+        </div>
+        <div class="title">
+          <h1>KX's FARM</h1>
+        </div>
+        <div class="titletext">
+          <h1>
+            Durian Track & Trace
+          </h1>
+          <h2>Secure and transparent tracking transactions</h2>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <br>
+  <br>
+
+  <div class="login_box">
+    <table>
+      <tr>
+        <td>
+          <p class="login_box_text_padding">
+            Account number: <span id="accountArea"></span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="button" onclick="accessToMetamask()" alt="Connect to Metamask button">
+            Connect to Metamask
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-top: 20px">
+          <p class="login_box_text_padding" id="accessContractP">
+            Connect Status: <span id="contractArea"></span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="button" id="accessContractButton" onclick="accessContractHandler()">
+            Access Contract
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <br>
+
+  <div class="login_box">
+    <p><u>Register as a Customer</u></p>
+          <br>
+    <table id="createUserTable" style="display: block">
+      <tr>
+        <td class="login_box_text_padding" style="padding-top: 20px; text-align: left">
+          Username:
+        </td>
+        <td>
+          <input style="margin-top: 10px" type="text" id="createUserP" placeholder="Enter New Username"
+            class="inputBox" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="button" id="createUserButton" onclick="createUserHandler()">
+            Register
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+
+  <div class="container">
+    <div class="index_box" style="background-color: bisque;">
+      <br />
+      <h1>Owner</h1>
+      <div>
+        <div style="margin-top: 15px" class="mini_box">
+          <h2><u>Assign Role</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>User Address:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="userAddress"
+                  placeholder="Enter User Address"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td>Role:</td>
+
+              <td class="tableInput">
+                <select id="userRole" class="inputBox">
+                  <option value="0">Farmer</option>
+                  <option value="1">Distributor</option>
+                  <option value="2">Retailer</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+
+          <br />
+          <button class="button" onclick="assignRole(); snackbar();">
+            Assign Role
+          </button>
+        </div>
+        <div style="margin-top: 15px" class="mini_box">
+          <h2><u>Create Farm</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Owner:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="farmOwner"
+                  placeholder="Enter Farm Owner Address"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Name:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="farmName"
+                  placeholder="Enter Farm Owner Name"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button onclick="createFarm(); snackbar();" class="button">
+            Create Farm
+          </button>
+        </div>
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Create Distribution Center</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Owner:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="dcOwner"
+                  placeholder="Enter Distribution Center Owner Address"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Name:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="dcName"
+                  placeholder="Enter Distribution Center Name"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="createDistributionCenter(); snackbar();"
+            class="button"
+          >
+            Create Distribution Center
+          </button>
+        </div>
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Create Retail Shop</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Owner:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="rsOwner"
+                  placeholder="Enter Retailer Owner Address"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Name:</td>
+              <td class="tableInput">
+                <input
+                  size="44"
+                  type="text"
+                  id="rsName"
+                  placeholder="Enter Retailer Name"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="createRetailShop(); snackbar();"
+            class="button"
+          >
+            Create Retail Shop
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="index_box" style="background-color: rgb(255, 246, 196);">
+      <br />
+      <h1>Farmer</h1>
+      <div class="container">
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Create Durian</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Farm ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="44"
+                    type="text"
+                    id="createDurianFarmAddress"
+                    placeholder="Enter Farm ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Durian Type:</td>
+              <td class="tableInput">
+                <input
+                  type="text"
+                  id="createDurianType"
+                  placeholder="Enter Durian Type"
+                  class="inputBox"
+                  size="44"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Harvest Date:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="createDurianHarvestDate"
+                  placeholder="Enter Harvest Date"
+                  class="inputBox"
+                  value=""
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Harvest Time:</td>
+              <td class="tableInput">
+                <input
+                  type="time"
+                  id="createDurianHarvestTime"
+                  placeholder="Enter Harvest Time"
+                  class="inputBox"
+                  value=""
+                />
+              </td>
+            </tr>
+          </table>
+
+          <br />
+          <button onclick="createDurian(); snackbar();" class="button">
+            Create Durian
+          </button>
+        </div>
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Update Date Pass to Distributor</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDateDurianID"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Distribution Center ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDurianDistributionCenterAddress"
+                    placeholder="Enter Distribution Center ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Pass to Distribution Center:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="updateDurianDatePassToDistributionCenter"
+                  placeholder="Enter Date Pass"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="updateDatePassToDistributionCenter(); snackbar();"
+            class="button"
+          >
+            Update Durian
+          </button>
+        </div>
+      </div>
+  </div>
+
+  <div class="container">
+    <div class="index_box" style="background-color: rgb(217, 255, 196);">
+      <br/>
+      <h1>Distribution Center</h1>
+      <div class="container">
+        <div style="margin-top: 15px" class="mini_box">
+          <h2><u>Update Durian Info from Farmer</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateFarmerDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Received From Farm:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="updateDurianDateReceivedFromFarm"
+                  placeholder="Enter Date Received From Farm"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="updateDurianInfoForDistributor(); snackbar();"
+            class="button"
+          >
+            Update Durian
+          </button>
+        </div>
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Update Date Pass to Retailer</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDurianToRetailerDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Retailer ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDurianRetailerAddress"
+                    placeholder="Enter Retailer ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Pass to Retailer:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="updateDurianDatePassToRetailer"
+                  placeholder="Enter Date Pass to Retailer"
+                  class="inputBox"
+                  size="44"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="updateDatePassToRetailer(); snackbar();"
+            class="button"
+          >
+            Update Date
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="index_box" style="background-color: rgb(196, 253, 255);">
+      <br/>
+      <h1>Retailer</h1>
+      <div class="container">
+        <div style="margin-top: 15px" class="mini_box">
+          <h2><u>Update Durian Info from Distributor </u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDistributorDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Received From Distribution Center:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="updateDurianDateReceivedFromDistributionCenter"
+                  placeholder="Enter Date Received From Distribution Center"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="updateDurianInfoForRetailer(); snackbar();"
+            class="button"
+          >
+            Update Durian
+          </button>
+        </div>
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Update Date Pass To Customer</u></h2>
+          <br />
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDateDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Customer Address:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDateCustomerAddress"
+                    placeholder="Enter Customer Address"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Pass to Customer:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="updateDateDatePassToCustomer"
+                  placeholder="Enter Date Pass to Customer"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <button
+            onclick="updateDatePassToCustomer(); snackbar();"
+            class="button"
+          >
+            Update Date
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="index_box" style="background-color: rgb(207, 196, 255);">
+      <br />
+
+      <h1>Customer</h1>
+      <div class="container">
+        <div style="margin-top: 15px" class="mini_box">
+          <h2><u>Update Durian for Customer</u></h2>
+          <br>
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="updateDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Date Received From Retailer:</td>
+              <td class="tableInput">
+                <input
+                  type="date"
+                  id="dateReceivedFromRetailer"
+                  placeholder="Enter Date Received From Retailer"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <br>
+          <button
+            onclick="updateDurianInfoForCustomer(); snackbar();"
+            class="button"
+          >
+            Update Durian
+          </button>
+        </div>
+        
+
+
+        <div style="margin-top: 15px; margin-bottom: 15px" class="mini_box">
+          <h2><u>Rate Durian</u></h2>
+          <br />
+
+          <table>
+            <tr>
+              <td>Durian ID:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="RateDurianAddress"
+                    placeholder="Enter Durian ID"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+          </table>
+
+          <br />
+          <div>
+            <u>Rating Scale</u><br>&nbsp;0 - Undefined &nbsp; 1 - Inedible &nbsp; 2 - Bad &nbsp; 3 -
+            Average &nbsp; 4 - Good &nbsp; 5 - Excellent
+          </div>
+          <br />
+          <table>
+            <tr>
+              <td>Taste:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="ratingTaste"
+                    placeholder="Enter Durian Rating Taste"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Fragrance:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="ratingFragrance"
+                    placeholder="Enter Durian Rating Fragrance"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Creaminess:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="ratingCreaminess"
+                    placeholder="Enter Durian Rating Creaminess"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Texture:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="ratingTexture"
+                    placeholder="Enter Durian Rating Texture"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+            <tr>
+              <td>Ripeness:</td>
+              <td class="tableInput">
+                  <input
+                    size="33"
+                    type="text"
+                    id="ratingRipeness"
+                    placeholder="Enter Durian Rating Ripeness"
+                    class="inputBox"
+                  />
+                </td>
+            </tr>
+          </table>
+          <br />
+          <table style="margin-bottom: 10px">
+            <tr>
+              <td>Durian Grade:</td>
+              <td class="tableInput">
+                <input
+                  type="text"
+                  id="gradeRating"
+                  placeholder="Enter Durian Grade Rating"
+                  size="44"
+                  class="inputBox"
+                />
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td>Comment:</td>
+            </tr>
+            <tr>
+              <td>
+                <textarea
+                  style="resize: none; padding: 5px"
+                  id="comment"
+                  cols="75"
+                  rows="10"
+                  placeholder="Provide a comment if any"
+                ></textarea>
+              </td>
+            </tr>
+          </table>
+
+          <br />
+          <button
+            onclick="updateDurianRating(); snackbar();"
+            class="button"
+          >
+            Rate Durian
+          </button>
+        </div>
+      </div>
+      <div class="mini_box">
+        <table>
+          <tr>
+            <td>Durian ID:</td>
+            <td class="tableInput">
+                <input
+                  size="33"
+                  type="text"
+                  id="durianID"
+                  placeholder="Enter Durian ID"
+                  class="inputBox"
+                />
+              </td>
+          </tr>
+        </table>
+        <br>
+        <button onclick="durianInfoHandler()" class="button">
+          Get Durian Info
+        </button>
+        <div style="margin-top: 15px">
+          <table class="infoTable">
+            <tr>
+              <td>Durian ID:</td>
+              <td>
+                <span id="tableDurianID"></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Durian type:</td>
+              <td>
+                <div><span id="durianType"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Farm ID:</td>
+              <td>
+                <div><span id="farmID"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Harvest date and time:</td>
+              <td>
+                <div><span id="harvestDateTime"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date pass to distribution center:</td>
+              <td>
+                <div><span id="datePassToDistributionCenter"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Distribution center ID:</td>
+              <td>
+                <div><span id="distributionCenterID"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date received from farm:</td>
+              <td>
+                <div><span id="dateReceivedFromFarm"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date pass to retailer:</td>
+              <td>
+                <div><span id="datePassToRetailer"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Retailer address:</td>
+              <td>
+                <div><span id="retailerAddress"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date received from distribution center:</td>
+              <td>
+                <div>
+                  <span id="dateReceivedFromDistributionCenter"></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date pass to customer:</td>
+              <td>
+                <div><span id="datePassToCustomer"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Customer address:</td>
+              <td>
+                <div><span id="customerAddress"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Date received from retailer:</td>
+              <td>
+                <div><span id="tableDateReceivedFromRetailer"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Taste:</td>
+              <td>
+                <div><span id="taste"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Fragrance:</td>
+              <td>
+                <div><span id="fragrance"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Texture:</td>
+              <td>
+                <div><span id="texture"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Creaminess:</td>
+              <td>
+                <div><span id="creaminess"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Ripeness:</td>
+              <td>
+                <div><span id="ripeness"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Grade:</td>
+              <td>
+                <div><span id="grade"></span></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Comment:</td>
+              <td>
+                <div><span id="tableComment"></span></div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+<script>
+  async function accessContractHandler() {
+    const ownerCreated = await firstAccessToContract();
+
+    const currentUser = window.ethereum.selectedAddress;
+    const currentUserRole = await getRole(currentUser);
+    console.log(currentUserRole);
+    const isCurrentUserUser = await isUser(currentUser);
+    console.log(await getOwner());
+
+    if (ownerCreated) {
+      window.location.href = 'admin.html';
+    } else if (!isCurrentUserUser) {
+      document.getElementById('createUserTable').style.display = 'block';
+    } else if (
+      currentUser.toLowerCase() == (await getOwner()).toLowerCase() ||
+      currentUserRole == 'Owner'
+    ) {
+      window.location.href = 'admin.html';
+    } else if (currentUserRole == 'Farmer') {
+      window.location.href = 'farmer.html';
+    } else if (currentUserRole == 'Distributor') {
+      window.location.href = 'distributor.html';
+    } else if (currentUserRole == 'Retailer') {
+      window.location.href = 'retailer.html';
+    } else if (currentUserRole == 'Customer') {
+      window.location.href = 'customer.html';
+    } else {
+      console.log('Error: No role found');
+    }
+  }
+
+  async function createUserHandler() {
+    const username = document.getElementById('createUserP').value;
+    await createUser(username);
+    //window.location.href = 'customer.html';
+  }
+</script>
+
+<script>
+  //admin
+  window.addEventListener('load', async () => {
+    await accessToMetamask();
+    await accessToContract();
+
+    const owner = await getOwner();
+    const currentUser = window.ethereum.selectedAddress;
+
+    if (currentUser.toLowerCase() !== owner.toLowerCase()) {
+      document.getElementById('addAdminDiv').style.display = 'none';
+    }
+  });
+</script>
+
+<script>
+  //farmer
+  window.addEventListener('load', async () => {
+    await accessToMetamask();
+    await accessToContract();
+
+    const currentUser = window.ethereum.selectedAddress;
+
+    // Get the farm address of the current user
+    const result = await getFarmerFarm(currentUser);
+    document.getElementById('addFarmerFarmAddress').value = result;
+    document.getElementById('addTreeFarmAddress').value = result;
+    document.getElementById('createDurianFarmAddress').value = result;
+
+    // If current user not the farm owner
+    if (
+      currentUser.toLowerCase() !== (await getFarmOwner(result)).toLowerCase()
+    ) {
+      document.getElementById('addFarmerDiv').style.display = 'none';
+    }
+
+    // Get all distribution center addresses
+    const distributionCenterIDs = await getDistributionCenterIDs();
+
+    // For each distribution center id, add an option to the select box
+    distributionCenterIDs.forEach((distributionCenterID) => {
+      const option = document.createElement('option');
+      option.value = distributionCenterID.distributionCenterID;
+      option.innerHTML = distributionCenterID.distributionCenterName;
+      document
+        .getElementById('updateDurianDistributionCenterAddress')
+        .appendChild(option);
+    });
+
+    // Get all durian
+    const allDurians = await getDurian();
+
+    // For each durian
+    allDurians.forEach((durian) => {
+      if (durian.durianFarm.farmID == result) {
+        const option = document.createElement('option');
+        option.value = durian.durianID;
+        option.innerHTML = durian.durianID;
+        document.getElementById('updateDateDurianID').appendChild(option);
+      }
+    });
+  });
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultDate();
+  });
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultTime();
+  });
+</script>
+
+<script>
+  //distributor
+  window.addEventListener('load', async () => {
+    await accessToMetamask();
+    await accessToContract();
+
+    const currentUser = window.ethereum.selectedAddress;
+
+    // Get the distribution center address of the current user
+    const result = await getDistributorDistributionCenter(currentUser);
+    document.getElementById('addDistributorDistributionCenterID').value =
+      result;
+
+    // If current user not the distribution center owner
+    if (
+      currentUser.toLowerCase() !==
+      (await getDistributionCenterOwner(result)).toLowerCase()
+    ) {
+      document.getElementById('addDistributorDiv').style.display = 'none';
+    }
+
+    // Get all retailers
+    const retailers = await getRetailers();
+
+    // For each retailer, add an option to the select box
+    retailers.forEach((retailer) => {
+      const option = document.createElement('option');
+      option.value = retailer.retailerAddress;
+      console.log(retailer.retailerName);
+      option.innerHTML = retailer.retailerName;
+      document
+        .getElementById('updateDurianRetailerAddress')
+        .appendChild(option);
+    });
+
+    // Get all durian
+    const allDurians = await getDurian();
+    console.log(allDurians);
+
+    // For each durian
+    allDurians.forEach((durian) => {
+      console.log(durian.durianFarm);
+      if (durian.durianFarm.distributionCenterID == result) {
+        const option = document.createElement('option');
+        option.value = durian.durianID;
+        option.innerHTML = durian.durianID;
+        document
+          .getElementById('updateDurianToRetailerDurianAddress')
+          .appendChild(option);
+        document
+          .getElementById('updateFarmerDurianAddress')
+          .appendChild(option.cloneNode(true));
+      }
+    });
+  });
+</script>
+
+<script>
+  //retailer
+  window.addEventListener('load', async () => {
+    await accessToMetamask();
+    await accessToContract();
+
+    const currentUser = window.ethereum.selectedAddress;
+
+    document.getElementById('updateRetailerRetailerAddress').value =
+      currentUser;
+
+    // Get all Customers
+    const customers = await getCustomers();
+    
+
+    // For each Customer, add an option to the select box
+    customers.forEach((customer) => {
+      const option = document.createElement('option');
+      option.value = customer.customerAddress;
+      console.log(customer.customerName);
+      option.innerHTML = customer.customerName;
+      document
+        .getElementById('updateDateCustomerAddress')
+        .appendChild(option);
+    });
+
+    // Get all durian
+    const allDurians = await getDurian();
+    console.log(allDurians);
+
+    // For each durian
+    allDurians.forEach((durian) => {
+      if (
+        durian.durianDistributionCenter.retailerAddress == result) {
+        const option = document.createElement('option');
+        option.value = durian.durianID;
+        option.innerHTML = durian.durianID;
+        document
+          .getElementById('updateDateDurianAddress')
+          .appendChild(option);
+        document
+          .getElementById('updateDistributorDurianAddress')
+          .appendChild(option.cloneNode(true));
+      }
+    });
+  });
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultDate();
+  });
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultTime();
+  });
+</script>
+
+<script>
+  //Customer
+  window.addEventListener('load', async () => {
+    await accessToMetamask();
+    await accessToContract();
+
+    const currentUser = window.ethereum.selectedAddress;
+
+    // Get all durian
+    const allDurians = await getDurian();
+
+    // For each durian
+    allDurians.forEach((durian) => {
+      if (
+        durian.durianRetailer.customerAddress.toLowerCase() ==
+        currentUser.toLowerCase()
+      ) {
+        const option = document.createElement('option');
+        option.value = durian.durianID;
+        option.innerHTML = durian.durianID;
+        document.getElementById('durianID').appendChild(option);
+        document
+          .getElementById('RateDurianAddress')
+          .appendChild(option.cloneNode(true));
+        document
+          .getElementById('updateDurianAddress')
+          .appendChild(option.cloneNode(true));
+      }
+    });
+  });
+
+  async function durianInfoHandler() {
+    const durian = await getDurianInfoForCustomer();
+    console.log(durian);
+
+    // durian.durianID
+    const durianID = durian.durianID;
+    console.log(durianID);
+    if (durian.durianID == 0) {
+      document.getElementById('tableDurianID').innerHTML = '-';
+    } else {
+      document.getElementById('tableDurianID').innerHTML = durian.durianID;
+    }
+
+    // durian.durianType
+    const durianType = durian.durianType;
+    if (durian.durianType == '') {
+      document.getElementById('durianType').innerHTML = '-';
+    } else {
+      document.getElementById('durianType').innerHTML = durian.durianType;
+    }
+
+    // durian.durianFarm.farmID
+    const farmID = durian.durianFarm.farmID;
+    if (durian.durianFarm.farmID == 0) {
+      document.getElementById('farmID').innerHTML = '-';
+    } else {
+      document.getElementById('farmID').innerHTML = durian.durianFarm.farmID;
+    }
+
+    // durian.durianFarm.treeID
+    const treeID = durian.durianFarm.treeID;
+    if (durian.durianFarm.treeID == 0) {
+      document.getElementById('treeID').innerHTML = '-';
+    } else {
+      document.getElementById('treeID').innerHTML = durian.durianFarm.treeID;
+    }
+
+    // durian.durianFarm.harvestDateTime
+    const harvestDateTime = durian.durianFarm.harvestDateTime;
+
+    // Change to html date time format
+    const harvestDate = new Date(harvestDateTime * 1000);
+    const htmlHarvestDateTime = harvestDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ');
+
+    if (durian.durianFarm.harvestDateTime == 0) {
+      document.getElementById('harvestDateTime').innerHTML = '-';
+    } else {
+      document.getElementById('harvestDateTime').innerHTML =
+        htmlHarvestDateTime;
+    }
+
+    // durian.durianFarm.datePassToDistributionCenter
+    const datePassToDistributionCenter =
+      durian.durianFarm.datePassToDistributionCenter;
+
+    // Change to html date time format
+    const passToDistributionCenterDate = new Date(
+      datePassToDistributionCenter * 1000,
+    );
+    const htmlPassToDistributionCenterDate = passToDistributionCenterDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ')
+      .slice(0, 10);
+
+    if (durian.durianFarm.datePassToDistributionCenter == 0) {
+      document.getElementById('datePassToDistributionCenter').innerHTML = '-';
+    } else {
+      document.getElementById('datePassToDistributionCenter').innerHTML =
+        htmlPassToDistributionCenterDate;
+    }
+
+    // durian.durianFarm.distributionCenterID
+    const distributionCenterID = durian.durianFarm.distributionCenterID;
+    if (durian.durianFarm.distributionCenterID == 0) {
+      document.getElementById('distributionCenterID').innerHTML = '-';
+    } else {
+      document.getElementById('distributionCenterID').innerHTML =
+        durian.durianFarm.distributionCenterID;
+    }
+
+    // durian.durianDistributionCenter.dateReceivedFromFarm
+    const dateReceivedFromFarm =
+      durian.durianDistributionCenter.dateReceivedFromFarm;
+
+    // Change to html date time format
+    const receivedFromFarmDate = new Date(dateReceivedFromFarm * 1000);
+    const htmlReceivedFromFarmDate = receivedFromFarmDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ')
+      .slice(0, 10);
+
+    if (durian.durianDistributionCenter.dateReceivedFromFarm == 0) {
+      document.getElementById('dateReceivedFromFarm').innerHTML = '-';
+    } else {
+      document.getElementById('dateReceivedFromFarm').innerHTML =
+        htmlReceivedFromFarmDate;
+    }
+
+    // durian.durianDistributionCenter.datePassToRetailer
+    const datePassToRetailer =
+      durian.durianDistributionCenter.datePassToRetailer;
+
+    // Change to html date time format
+    const passToRetailerDate = new Date(datePassToRetailer * 1000);
+    const htmlPassToRetailerDate = passToRetailerDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ')
+      .slice(0, 10);
+
+    if (durian.durianDistributionCenter.datePassToRetailer == 0) {
+      document.getElementById('datePassToRetailer').innerHTML = '-';
+    } else {
+      document.getElementById('datePassToRetailer').innerHTML =
+        htmlPassToRetailerDate;
+    }
+
+    // durian.durianDistributionCenter.retailerAddress
+    const retailerAddress = durian.durianDistributionCenter.retailerAddress;
+    if (
+      durian.durianDistributionCenter.retailerAddress ==
+      0x0000000000000000000000000000000000000000
+    ) {
+      document.getElementById('retailerAddress').innerHTML = '-';
+    } else {
+      document.getElementById('retailerAddress').innerHTML =
+        durian.durianDistributionCenter.retailerAddress;
+    }
+
+    // durian.durianRetailer.dateReceivedFromDistributionCenter
+    const dateReceivedFromDistributionCenter =
+      durian.durianRetailer.dateReceivedFromDistributionCenter;
+
+    // Change to html date time format
+    const receivedFromDistributionCenterDate = new Date(
+      dateReceivedFromDistributionCenter * 1000,
+    );
+    const htmlReceivedFromDistributionCenterDate =
+      receivedFromDistributionCenterDate
+        .toISOString()
+        .slice(0, 16)
+        .replace('T', ' ')
+        .slice(0, 10);
+
+    if (durian.durianRetailer.dateReceivedFromDistributionCenter == 0) {
+      document.getElementById(
+        'dateReceivedFromDistributionCenter',
+      ).innerHTML = '-';
+    } else {
+      document.getElementById(
+        'dateReceivedFromDistributionCenter',
+      ).innerHTML = htmlReceivedFromDistributionCenterDate;
+    }
+
+    // durian.durianRetailer.datePassToCustomer
+    const datePassToCustomer = durian.durianRetailer.datePassToCustomer;
+
+    // Change to html date time format
+    const passToCustomerDate = new Date(datePassToCustomer * 1000);
+    const htmlPassToCustomerDate = passToCustomerDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ')
+      .slice(0, 10);
+
+    if (durian.durianRetailer.datePassToCustomer == 0) {
+      document.getElementById('datePassToCustomer').innerHTML = '-';
+    } else {
+      document.getElementById('datePassToCustomer').innerHTML =
+        htmlPassToCustomerDate;
+    }
+
+    // durian.durianRetailer.customerAddress
+    const customerAddress = durian.durianRetailer.customerAddress;
+    if (
+      durian.durianRetailer.customerAddress ==
+      0x0000000000000000000000000000000000000000
+    ) {
+      document.getElementById('customerAddress').innerHTML = '-';
+    } else {
+      document.getElementById('customerAddress').innerHTML =
+        durian.durianRetailer.customerAddress;
+    }
+
+    // durian.durianCustomer.dateReceivedFromRetailer
+    const dateReceivedFromRetailer =
+      durian.durianCustomer.dateReceivedFromRetailer;
+
+    // Change to html date time format
+    const receivedFromRetailerDate = new Date(
+      dateReceivedFromRetailer * 1000,
+    );
+    const htmlReceivedFromRetailerDate = receivedFromRetailerDate
+      .toISOString()
+      .slice(0, 16)
+      .replace('T', ' ')
+      .slice(0, 10);
+
+    if (durian.durianCustomer.dateReceivedFromRetailer == 0) {
+      document.getElementById('tableDateReceivedFromRetailer').innerHTML =
+        '-';
+    } else {
+      document.getElementById('tableDateReceivedFromRetailer').innerHTML =
+        htmlReceivedFromRetailerDate;
+    }
+
+    // durian.durianCustomer.rating.taste
+    const taste = durian.durianCustomer.rating.taste;
+    if (durian.durianCustomer.rating.taste == 'Undefined') {
+      document.getElementById('taste').innerHTML = '-';
+    } else if (durian.durianCustomer.rating.taste == 0) {
+      document.getElementById('taste').innerHTML = 'Inedible';
+    } else if (durian.durianCustomer.rating.taste == 1) {
+      document.getElementById('taste').innerHTML = 'Bad';
+    } else if (durian.durianCustomer.rating.taste == 2) {
+      document.getElementById('taste').innerHTML = 'Average';
+    } else if (durian.durianCustomer.rating.taste == 3) {
+      document.getElementById('taste').innerHTML = 'Good';
+    } else if (durian.durianCustomer.rating.taste == 4) {
+      document.getElementById('taste').innerHTML = 'Excellent';
+    }
+
+    // durian.durianCustomer.rating.fragrance
+    const fragrance = durian.durianCustomer.rating.fragrance;
+    if (durian.durianCustomer.rating.fragrance == 'Undefined') {
+      document.getElementById('fragrance').innerHTML = '-';
+    } else if (durian.durianCustomer.rating.fragrance == 0) {
+      document.getElementById('fragrance').innerHTML = 'Inedible';
+    } else if (durian.durianCustomer.rating.fragrance == 1) {
+      document.getElementById('fragrance').innerHTML = 'Bad';
+    } else if (durian.durianCustomer.rating.fragrance == 2) {
+      document.getElementById('fragrance').innerHTML = 'Average';
+    } else if (durian.durianCustomer.rating.fragrance == 3) {
+      document.getElementById('fragrance').innerHTML = 'Good';
+    } else if (durian.durianCustomer.rating.fragrance == 4) {
+      document.getElementById('fragrance').innerHTML = 'Excellent';
+    }
+
+    // durian.durianCustomer.rating.texture
+    const texture = durian.durianCustomer.rating.texture;
+    if (durian.durianCustomer.rating.texture == 'Undefined') {
+      document.getElementById('texture').innerHTML = '-';
+    } else if (durian.durianCustomer.rating.texture == 0) {
+      document.getElementById('texture').innerHTML = 'Inedible';
+    } else if (durian.durianCustomer.rating.texture == 1) {
+      document.getElementById('texture').innerHTML = 'Bad';
+    } else if (durian.durianCustomer.rating.texture == 2) {
+      document.getElementById('texture').innerHTML = 'Average';
+    } else if (durian.durianCustomer.rating.texture == 3) {
+      document.getElementById('texture').innerHTML = 'Good';
+    } else if (durian.durianCustomer.rating.texture == 4) {
+      document.getElementById('texture').innerHTML = 'Excellent';
+    }
+
+    // durian.durianCustomer.rating.creaminess
+    const creaminess = durian.durianCustomer.rating.creaminess;
+    if (durian.durianCustomer.rating.creaminess == 'Undefined') {
+      document.getElementById('creaminess').innerHTML = '-';
+    } else if (durian.durianCustomer.rating.creaminess == 0) {
+      document.getElementById('creaminess').innerHTML = 'Inedible';
+    } else if (durian.durianCustomer.rating.creaminess == 1) {
+      document.getElementById('creaminess').innerHTML = 'Bad';
+    } else if (durian.durianCustomer.rating.creaminess == 2) {
+      document.getElementById('creaminess').innerHTML = 'Average';
+    } else if (durian.durianCustomer.rating.creaminess == 3) {
+      document.getElementById('creaminess').innerHTML = 'Good';
+    } else if (durian.durianCustomer.rating.creaminess == 4) {
+      document.getElementById('creaminess').innerHTML = 'Excellent';
+    }
+
+    // durian.durianCustomer.rating.ripeness
+    const ripeness = durian.durianCustomer.rating.ripeness;
+    if (durian.durianCustomer.rating.ripeness == 'Undefined') {
+      document.getElementById('ripeness').innerHTML = '-';
+    } else if (durian.durianCustomer.rating.ripeness == 0) {
+      document.getElementById('ripeness').innerHTML = 'Inedible';
+    } else if (durian.durianCustomer.rating.ripeness == 1) {
+      document.getElementById('ripeness').innerHTML = 'Bad';
+    } else if (durian.durianCustomer.rating.ripeness == 2) {
+      document.getElementById('ripeness').innerHTML = 'Average';
+    } else if (durian.durianCustomer.rating.ripeness == 3) {
+      document.getElementById('ripeness').innerHTML = 'Good';
+    } else if (durian.durianCustomer.rating.ripeness == 4) {
+      document.getElementById('ripeness').innerHTML = 'Excellent';
+    }
+
+    // durian.durianCustomer.rating.grade
+    const grade = durian.durianCustomer.rating.gradeRating;
+    if (grade == undefined) {
+      document.getElementById('grade').innerHTML = '-';
+    } else {
+      document.getElementById('grade').innerHTML = grade;
+    }
+
+    // durian.durianCustomer.rating.comment
+    const comment = durian.durianCustomer.rating.comment;
+    if (comment == '') {
+      document.getElementById('tableComment').innerHTML = '-';
+    } else {
+      document.getElementById('tableComment').innerHTML = comment;
+    }
+  }
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultDate();
+  });
+</script>
+<script>
+  // Call the setDefaultDate function when the DOM content is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultTime();
+  });
+</script>
+<script>
+  // For each durian ID, add an option to the select box
+  function addDurianIDOption(durianID) {
+    var select = document.getElementById('selectDurianID');
+    var option = document.createElement('option');
+    option.text = durianID;
+    select.add(option);
+  }
+</script>
+
+<script>
+  //1- connect metamask
+  let account;
+  const accessToMetamask = async () => {
+      if(window.ethereum !== "undefined") {
+          const accounts = await ethereum.request({ method: "eth_requestAccounts"});
+          account = accounts[0];
+          document.getElementById("accountArea").innerHTML = account;
+      }
+  }
+
+   //2- connect to smart contract
+   const accessToContract = async () => {
+            const ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum MyDurianTracing.Roles",
+				"name": "_role",
+				"type": "uint8"
+			}
+		],
+		"name": "assignRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createDistributionCenter",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_farmID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_type",
+				"type": "string"
+			},
+			{
+				"internalType": "int256",
+				"name": "_harvestDateTime",
+				"type": "int256"
+			}
+		],
+		"name": "createDurian",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createFarm",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createRetailShop",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "customers",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "customerAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "customerName",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "customersCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "distributionCenters",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "distributionCenterID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "distributionCenterOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "distributionCenterName",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "distributionCentersCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "distributors",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "durians",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "durianType",
+				"type": "string"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "farmID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "int256",
+						"name": "harvestDateTime",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "datePassToDistributionCenter",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "distributionCenterID",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct MyDurianTracing.DurianFarm",
+				"name": "durianFarm",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "int256",
+						"name": "dateReceivedFromFarm",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "datePassToRetailer",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "retailShopID",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct MyDurianTracing.DurianDistributionCenter",
+				"name": "durianDistributionCenter",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "int256",
+						"name": "dateReceivedFromDistributionCenter",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "datePassToCustomer",
+						"type": "int256"
+					},
+					{
+						"internalType": "address",
+						"name": "customerAddress",
+						"type": "address"
+					}
+				],
+				"internalType": "struct MyDurianTracing.DurianRetailShop",
+				"name": "durianRetailShop",
+				"type": "tuple"
+			},
+			{
+				"components": [
+					{
+						"internalType": "int256",
+						"name": "dateReceivedFromRetailer",
+						"type": "int256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "enum MyDurianTracing.RatingScale",
+								"name": "taste",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum MyDurianTracing.RatingScale",
+								"name": "fragrance",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum MyDurianTracing.RatingScale",
+								"name": "texture",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum MyDurianTracing.RatingScale",
+								"name": "creaminess",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum MyDurianTracing.RatingScale",
+								"name": "ripeness",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "gradeRating",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							}
+						],
+						"internalType": "struct MyDurianTracing.Rating",
+						"name": "rating",
+						"type": "tuple"
+					}
+				],
+				"internalType": "struct MyDurianTracing.DurianCustomer",
+				"name": "durianCustomer",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "duriansCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "farmOwners",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "farmers",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "farms",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "farmID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "farmOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "farmName",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "farmsCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCustomers",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "customerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "customerName",
+						"type": "string"
+					}
+				],
+				"internalType": "struct MyDurianTracing.Customer[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			}
+		],
+		"name": "getDurianInfoForCustomer",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "durianID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "durianType",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "farmID",
+								"type": "uint256"
+							},
+							{
+								"internalType": "int256",
+								"name": "harvestDateTime",
+								"type": "int256"
+							},
+							{
+								"internalType": "int256",
+								"name": "datePassToDistributionCenter",
+								"type": "int256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "distributionCenterID",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct MyDurianTracing.DurianFarm",
+						"name": "durianFarm",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "int256",
+								"name": "dateReceivedFromFarm",
+								"type": "int256"
+							},
+							{
+								"internalType": "int256",
+								"name": "datePassToRetailer",
+								"type": "int256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "retailShopID",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct MyDurianTracing.DurianDistributionCenter",
+						"name": "durianDistributionCenter",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "int256",
+								"name": "dateReceivedFromDistributionCenter",
+								"type": "int256"
+							},
+							{
+								"internalType": "int256",
+								"name": "datePassToCustomer",
+								"type": "int256"
+							},
+							{
+								"internalType": "address",
+								"name": "customerAddress",
+								"type": "address"
+							}
+						],
+						"internalType": "struct MyDurianTracing.DurianRetailShop",
+						"name": "durianRetailShop",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "int256",
+								"name": "dateReceivedFromRetailer",
+								"type": "int256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "enum MyDurianTracing.RatingScale",
+										"name": "taste",
+										"type": "uint8"
+									},
+									{
+										"internalType": "enum MyDurianTracing.RatingScale",
+										"name": "fragrance",
+										"type": "uint8"
+									},
+									{
+										"internalType": "enum MyDurianTracing.RatingScale",
+										"name": "texture",
+										"type": "uint8"
+									},
+									{
+										"internalType": "enum MyDurianTracing.RatingScale",
+										"name": "creaminess",
+										"type": "uint8"
+									},
+									{
+										"internalType": "enum MyDurianTracing.RatingScale",
+										"name": "ripeness",
+										"type": "uint8"
+									},
+									{
+										"internalType": "string",
+										"name": "gradeRating",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "comment",
+										"type": "string"
+									}
+								],
+								"internalType": "struct MyDurianTracing.Rating",
+								"name": "rating",
+								"type": "tuple"
+							}
+						],
+						"internalType": "struct MyDurianTracing.DurianCustomer",
+						"name": "durianCustomer",
+						"type": "tuple"
+					}
+				],
+				"internalType": "struct MyDurianTracing.Durian",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "retailShops",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "retailShopID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "retailShopOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "retailShopName",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "retailShopsCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "retailers",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_datePassToCustomer",
+				"type": "int256"
+			},
+			{
+				"internalType": "address",
+				"name": "_cutomerAddress",
+				"type": "address"
+			}
+		],
+		"name": "updateDatePassToCustomer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_datePassToDistributionCenter",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_distributionCenterID",
+				"type": "uint256"
+			}
+		],
+		"name": "updateDatePassToDistributionCenter",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_datePassToRetailer",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_retailShopID",
+				"type": "uint256"
+			}
+		],
+		"name": "updateDatePassToRetailer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_dateReceivedFromRetailer",
+				"type": "int256"
+			}
+		],
+		"name": "updateDurianInfoForCustomer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_dateReceivedFromFarm",
+				"type": "int256"
+			}
+		],
+		"name": "updateDurianInfoForDistributor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "int256",
+				"name": "_dateReceivedFromDistributionCenter",
+				"type": "int256"
+			}
+		],
+		"name": "updateDurianInfoForRetailer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_durianID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_taste",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fragrance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_texture",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_creaminess",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ripeness",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_gradeRating",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_comment",
+				"type": "string"
+			}
+		],
+		"name": "updateDurianRating",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "users",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "userName",
+				"type": "string"
+			},
+			{
+				"internalType": "enum MyDurianTracing.Roles",
+				"name": "userRole",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "usersCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+            const Address = "0x423202f52419E2d83A4636E8bc82AD67A9b8CA8f";
+            window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+            window.contract = await new window.web3.eth.Contract( ABI, Address); //how you create an instance of that contract by using the abi and address  
+            document.getElementById("contractArea").innerHTML = "connected to Product smart contract";
+        }
+
+
+
+// Create user when connect to smart contract (Subsequent users)
+const createUser = async (username) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods
+      .createUser(username)
+      .send({ from: account });
+  }
+};
+
+const isUser = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.isUser(address).call();
+    return result;
+  }
+};
+
+
+//Assign role to user with connection to contract
+const assignRole = async () => {
+  const userAddress = document.getElementById('userAddress').value;
+  const userRole = document.getElementById('userRole').value;
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .assignRole(userAddress, userRole)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Get user roles
+const getUserRole = async () => {
+  const userAddress = document.getElementById('userAddress').value;
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .getUserRole(userAddress)
+      .call();
+    let roleName;
+    if (result == 0) {
+      roleName = 'Owner';
+    } else if (result == 1) {
+      roleName = 'Farmer';
+    } else if (result == 2) {
+      roleName = 'Distributor';
+    } else if (result == 3) {
+      roleName = 'Retailer';
+    } else if (result == 4) {
+      roleName = 'Customer';
+    }
+    return roleName;
+  }
+};
+
+const getRole = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getUserRole(address).call();
+    console.log(result);
+    let roleName;
+    if (result == 0) {
+      roleName = 'Owner';
+    } else if (result == 1) {
+      roleName = 'Farmer';
+    } else if (result == 2) {
+      roleName = 'Distributor';
+    } else if (result == 3) {
+      roleName = 'Retailer';
+    } else if (result == 4) {
+      roleName = 'Customer';
+    }
+    return roleName;
+  }
+};
+
+//Create farm with connection to contract
+const createFarm = async () => {
+  const farmOwner = document.getElementById('farmOwner').value;
+  const farmName = document.getElementById('farmName').value;
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .createFarm(farmOwner, farmName)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Get farm
+const getFarmInfo = async () => {
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .getFarmInfo(farmAddress)
+      .call();
+    console.log(result);
+  }
+};
+
+// Create distribution center
+const createDistributionCenter = async () => {
+  const distributionCenterOwner = document.getElementById('dcOwner').value;
+  const distributionCenterName = document.getElementById('dcName').value;
+
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods
+      .createDistributionCenter(
+        distributionCenterOwner,
+        distributionCenterName
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Get distribution center
+const getDistributionCenterInfo = async () => {
+  const distributionCenterAddress = document.getElementById(
+    'distributionCenterAddress',
+  ).value;
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .getDistributionCenterInfo(distributionCenterAddress)
+      .call();
+    console.log(result);
+  }
+};
+
+//Create retail shop with connection to contract
+const createRetailShop = async () => {
+  const rsOwner = document.getElementById('rsOwner').value;
+  const rsName = document.getElementById('rsName').value;
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .createRetailShop(rsOwner, rsName)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+/////////////////////////////////////////////////////////////
+// FARM
+/////////////////////////////////////////////////////////////
+// Get all distibution centers address
+const getDistributionCenterIDs = async () => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods
+      .getDistributionCenterIDs()
+      .call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Get farmer's farm
+const getFarmerFarm = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getFarmerFarm(address).call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Get farm owner
+const getFarmOwner = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getFarmOwner(address).call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Create Durian
+const createDurian = async () => {
+  const durianType = document.getElementById('createDurianType').value;
+  const farmAddress = document.getElementById('createDurianFarmAddress').value;
+  const harvestDate = document.getElementById('createDurianHarvestDate').value;
+  const harvestTime = document.getElementById('createDurianHarvestTime').value;
+
+  // Create a new Date object from the date input string
+  const dateObject = new Date(harvestDate);
+
+  // Split the time input into hours, minutes, and seconds
+  const [hours, minutes] = harvestTime.split(':');
+
+  // Set the hours, minutes, and seconds on the date object
+  dateObject.setHours(hours);
+  dateObject.setMinutes(minutes);
+
+  const harvestDateTime = Math.floor(Date.parse(dateObject) / 1000);
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .createDurian(farmAddress, durianType, harvestDateTime)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// updateDatePassToDistributionCenter
+const updateDatePassToDistributionCenter = async () => {
+
+  const durianID = document.getElementById('updateDateDurianID').value;
+  const distributionCenterAddress = document.getElementById('updateDurianDistributionCenterAddress').value;
+  const datePassToDistributionCenter = document.getElementById(
+    'updateDurianDatePassToDistributionCenter',
+  ).value;
+
+  // Create a new Date object from the date input string
+  const dateObject = new Date(datePassToDistributionCenter);
+
+  const datePassToDistributionCenterTime = Math.floor(
+    Date.parse(dateObject) / 1000,
+  );
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDatePassToDistributionCenter(
+        durianID,
+        datePassToDistributionCenterTime,
+        distributionCenterAddress,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+/////////////////////////////////////////////////////////////
+// DISTRIBUTOR
+/////////////////////////////////////////////////////////////
+// Get retailers
+const getRetailers = async () => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getRetailers().call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Get distributor's distribution center
+const getDistributorDistributionCenter = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods
+      .getDistributorDistributionCenter(address)
+      .call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Get distribution center owner
+const getDistributionCenterOwner = async (address) => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods
+      .getDistributionCenterOwner(address)
+      .call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Update durian info for distribution center
+const updateDurianInfoForDistributor = async () => {
+  const durianAddress = document.getElementById(
+    'updateFarmerDurianAddress',
+  ).value;
+  const dateReceivedFromFarm = document.getElementById(
+    'updateDurianDateReceivedFromFarm',
+  ).value;
+
+  // Change date format to unix
+  const dateObject = new Date(dateReceivedFromFarm);
+  const dateReceivedFromFarmTime = Math.floor(Date.parse(dateObject) / 1000);
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDurianInfoForDistributor(durianAddress, dateReceivedFromFarmTime)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Update date pass to retailer
+const updateDatePassToRetailer = async () => {
+  const durianAddress = document.getElementById(
+    'updateDurianToRetailerDurianAddress',
+  ).value;
+  const retailerAddress =
+  document.getElementById(
+    'updateDurianRetailerAddress',
+  ).value;
+  const datePassToRetailer = document.getElementById(
+    'updateDurianDatePassToRetailer',
+  ).value;
+
+  // Change date format to unix
+  const dateObject = new Date(datePassToRetailer);
+  const datePassToRetailerTime = Math.floor(Date.parse(dateObject) / 1000);
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDatePassToRetailer(
+        durianAddress,
+        datePassToRetailerTime,
+        retailerAddress,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+/////////////////////////////////////////////////////////////
+// RETAILER
+/////////////////////////////////////////////////////////////
+// Get customers
+const getCustomers = async () => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getCustomers().call();
+    console.log(result);
+    return result;
+  }
+};
+
+// Update durian info for retailer
+const updateDurianInfoForRetailer = async () => {
+  const durianAddress = document.getElementById(
+    'updateDistributorDurianAddress',).value;
+  const dateReceivedFromDistributionCenter = document.getElementById(
+    'updateDurianDateReceivedFromDistributionCenter',).value;
+
+  // Change date format to unix
+  const dateObject = new Date(dateReceivedFromDistributionCenter);
+  const dateReceivedFromDistributionCenterTime = Math.floor(
+    Date.parse(dateObject) / 1000,
+  );
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDurianInfoForRetailer(
+        durianAddress,
+        dateReceivedFromDistributionCenterTime,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+/*// Update retailer info
+const updateRetailerInfo = async () => {
+  const retailerAddress = document.getElementById(
+    'updateRetailerRetailerAddress',
+  ).value;
+  const retailerLocation = document.getElementById(
+    'updateRetailerLocation',
+  ).value;
+  const retailerOperatingYears = document.getElementById(
+    'updateRetailerOperatingYears',
+  ).value;
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateRetailerInfo(
+        retailerAddress,
+        retailerLocation,
+        retailerOperatingYears,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};*/
+
+// Update date pass to customer
+const updateDatePassToCustomer = async () => {
+  const durianAddress = document.getElementById(
+    'updateDateDurianAddress',
+  ).value;
+  const customerAddress = document.getElementById(
+    'updateDateCustomerAddress',
+  ).value;
+  const datePassToCustomer = document.getElementById(
+    'updateDateDatePassToCustomer',
+  ).value;
+
+  // Change date format to unix
+  const dateObject = new Date(datePassToCustomer);
+  const datePassToCustomerTime = Math.floor(Date.parse(dateObject) / 1000);
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDatePassToCustomer(
+        durianAddress,
+        datePassToCustomerTime,
+        customerAddress,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+/////////////////////////////////////////////////////////////
+// CUSTOMER
+/////////////////////////////////////////////////////////////
+
+// Update durian info for customer
+const updateDurianInfoForCustomer = async () => {
+  const durianAddress = document.getElementById('updateDurianAddress').value;
+  const dateReceiverFromRetailer = document.getElementById(
+    'dateReceivedFromRetailer',).value;
+
+  // Change date format to unix
+  const dateObject = new Date(dateReceiverFromRetailer);
+  const dateReceiverFromRetailerTime = Math.floor(
+    Date.parse(dateObject) / 1000,
+  );
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDurianInfoForCustomer(durianAddress, dateReceiverFromRetailerTime)
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Update durian rating
+const updateDurianRating = async () => {
+  const durianID = document.getElementById('RateDurianAddress').value;
+  const taste = document.getElementById('ratingTaste').value;
+  const fragrance = document.getElementById('ratingFragrance').value;
+  const creaminess = document.getElementById('ratingCreaminess').value;
+  const texture = document.getElementById('ratingTexture').value;
+  const ripeness = document.getElementById('ratingRipeness').value;
+  const gradeRating = document.getElementById('gradeRating').value;
+  const comment = document.getElementById('comment').value;
+
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .updateDurianRating(
+        durianID,
+        taste,
+        fragrance,
+        texture,
+        creaminess,
+        ripeness,
+        gradeRating,
+        comment,
+      )
+      .send({ from: account });
+    console.log(result);
+  }
+};
+
+// Display durian info for customer
+const getDurianInfoForCustomer = async () => {
+  const durianID = document.getElementById('durianID').value;
+  if (window.ethereum !== 'undefined') {
+    console.log(window.contract.methods);
+    const result = await window.contract.methods
+      .getDurianInfoForCustomer(durianID)
+      .call();
+    console.log(result);
+    return result;
+  }
+};
+
+/////////////////////////////////////////////////////////////
+// UTILITY
+/////////////////////////////////////////////////////////////
+
+function snackbar() {
+  var x = document.getElementById('snackbar');
+  x.className = 'show';
+  setTimeout(function () {
+    x.className = x.className.replace('show', '');
+  }, 3000);
+}
+
+function disconnect() {
+  window.ethereum.selectedAddress = null;
+  account = null;
+  window.location.href = 'index.html';
+}
+
+function setDefaultDate() {
+  // Get the current date in the format "YYYY-MM-DD"
+  const today = new Date().toISOString().substring(0, 10);
+  // Set the default value of the date input field to today's date
+  document.getElementById('createDurianHarvestDate').value = today;
+  document.getElementById(
+    'updateDurianDateReceivedFromDistributionCenter',
+  ).value = today;
+  document.getElementById('updateDateDatePassToCustomer').value = today;
+  document.getElementById('updateDurianDateReceivedFromFarm').value = today;
+  document.getElementById('updateDurianDatePassToRetailer').value = today;
+  document.getElementById('dateReceivedFromRetailer').value = today;
+  document.getElementById('updateDurianDatePassToDistributionCenter').value =
+    today;
+}
+
+function setDefaultTime() {
+  // Get the current time in the format "HH:MM"
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const currentTime = `${hours}:${minutes}`;
+
+  // Set the default value of the time input field to the current time
+  document.getElementById('createDurianHarvestTime').value = currentTime;
+}
+
+// Get durian
+const getDurian = async () => {
+  if (window.ethereum !== 'undefined') {
+    const result = await window.contract.methods.getDurian().call();
+    console.log(result);
+
+    return result;
+  }
+}
+
+</script>
+
+
+</html>

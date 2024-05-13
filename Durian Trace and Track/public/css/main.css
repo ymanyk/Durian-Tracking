@@ -1,0 +1,380 @@
+@font-face {
+  font-family: Forum;
+  src: url(/fonts/Forum-Regular.ttf);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Universal selector */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Forum;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 960px;
+  min-width: 650px;
+  padding-top: 10px;
+  position: relative;
+}
+
+.functionContainer {
+  width: 50%;
+  color: #000000;
+  margin: 30px auto;
+  max-width: 960px;
+  min-width: 650px;
+  padding: 10px;
+  background-color: peachpuff;
+  border: 1px solid black;
+  border-radius: 15px;
+  position: relative;
+}
+
+.functionContainer > h1 {
+  text-align: center;
+  font-size: 35px;
+}
+
+.functionContainer > h2 {
+  text-align: left;
+  font-size: 20px;
+}
+
+.index_box {
+  width: 100%;
+  margin: 30px 0;
+  background-color: white;
+  background-position: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding-bottom: 30px;
+}
+
+.index_box > h1 {
+  text-align: center;
+  padding: 15px 0px;
+  color: rgb(0, 0, 0);
+}
+
+.index_box > h2 {
+  text-align: center;
+  padding: 10px 10px;
+  color: rgb(0, 0, 0);
+}
+
+.index_box > button {
+  text-align: center;
+  padding: 20px 0px;
+  color: rgb(0, 0, 0);
+}
+
+.index_box > p {
+  text-align: center;
+}
+
+.index_farmer {
+  margin: 20px 20px 20px 35px;
+  padding: 100px 0px;
+  width: 44%;
+  float: left;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.index_distributor {
+  margin: 20px 20px 20px 20px;
+  padding: 100px 0px;
+  width: 44%;
+  float: left;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.index_retailer {
+  margin: 20px 20px 20px 35px;
+  padding: 100px 0px;
+  width: 44%;
+  float: left;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.index_consumer {
+  margin: 20px 20px 20px 20px;
+  padding: 100px 0px;
+  width: 44%;
+  float: left;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.index_admin {
+  margin: 20px 20px 20px 20px;
+  padding: 100px 0px;
+  width: 44%;
+  float: left;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.mini_box {
+  width: 55%;
+  background-color: white;
+  background-position: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: auto;
+}
+
+.login_box {
+  width: 90%;
+  background-color: white;
+  background-position: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #000;
+  margin: 0 auto;
+  width: fit-content;
+  text-align: left;
+}
+
+.login_box_text_padding {
+  padding-left: 5px;
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  background: #98d4e6;
+  border-radius: 20px;
+  padding: 5px 20px 5px 20px;
+  color: #ffffff;
+  font-size: 20px;
+  border: none;
+}
+
+.button:hover {
+  background-color: #3dbaec;
+}
+
+.button:active {
+  background-color: #0e78da;
+}
+
+/* Table formatting */
+.tableInput {
+  padding-left: 10px;
+}
+
+.inputBox {
+  padding: 5px;
+}
+
+.infoTable {
+  border-collapse: separate;
+}
+
+.infoTable td {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+/* Snackbar */
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+
+/*animate*/
+/* The design and effects of the header */
+header {
+  height: 500px;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 30vh;
+  animation: animeheader 30s ease-in-out infinite;
+  background-size: cover;
+}
+
+/* The shell above the background image */
+.shell {
+  position: relative;
+  top: 0x;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  background: rgba(209, 62, 62, 0.25);
+}
+
+/* Position of text in header */
+.titletext {
+  position: absolute;
+  top: 55%;
+  left: 35%;
+  text-align: center;
+}
+
+/* Colour and font size of text in header */
+.titletext {
+  font-size: 1.5em;
+  color: #000000;
+}
+
+.titletext > h2 {
+  font-size: large;
+}
+
+
+/*nav*/
+@font-face {
+  font-family: Forum;
+  src: url(/Website/fonts/Forum-Regular.ttf);
+}
+
+/* Navigation bar design */
+.navi {
+  width: 100%;
+  height: 100px;
+  background-color: #F69350;
+  box-sizing: border-box;
+  padding: absolute;
+}
+
+/* Position of logo in navigation bar */
+.logo {
+  float: left;
+  line-height: 80px;
+  font-size: 32px;
+}
+
+.title h1 {
+  text-align: center;
+  font-family: Forum;
+  font-size: 50px;
+  padding-top: 20px;
+  padding-right: 150px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(216, 93, 11);
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #e2b874;
+}
+
